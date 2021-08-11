@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" onKeyPressed="#kbdLogin" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.InventoryManagementSystem.Controller.LoginController">
+   <children>
+      <VBox alignment="CENTER" layoutX="20.0" layoutY="40.0" spacing="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <Label prefWidth="60.0" text="Username" />
+                  <TextField fx:id="username" prefWidth="160.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <Label prefWidth="60.0" text="Password" />
+                  <PasswordField fx:id="password" prefWidth="160.0" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <Button focusTraversable="false" layoutX="150.0" layoutY="150.0" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="100.0" text="Login">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-primary" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <VBox alignment="CENTER" layoutX="100.0" layoutY="210.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="promptMsg" alignment="CENTER" textAlignment="CENTER" textFill="WHITE" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

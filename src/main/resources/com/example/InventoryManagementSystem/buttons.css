@@ -1,0 +1,13 @@
+.button {
+  -fx-background-color:  linear-gradient(#f2f2f2, #d6d6d6),linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),linear-gradient(#dddddd 0%, #f6f6f6 50%);
+  -fx-background-radius: 8, 6, 7;
+  -fx-background-insets: 0, 1, 2;
+  -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);
+}
+
+.button:pressed {
+  -fx-background-color:  linear-gradient(#f2f2f2, #d6d6d6),linear-gradient(#fcfcfc 0%, #d9d9d9 30%, #d6d6d6 90%),linear-gradient(#dddddd 0%, #f6f6f6 55%);
+  -fx-background-radius: 8, 6, 7;
+  -fx-background-insets: 0, 1, 2;
+  -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.6), 8, 0.0, 0, 1);
+}

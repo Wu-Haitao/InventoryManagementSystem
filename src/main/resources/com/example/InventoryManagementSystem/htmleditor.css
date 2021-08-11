@@ -1,0 +1,32 @@
+.html-editor 
+{
+    -fx-background-color: white;
+}
+
+.html-editor .grid .bottom-toolbar, .html-editor .grid .top-toolbar {
+    -fx-background-color: transparent;
+}
+ 
+.html-editor .button, .html-editor .toggle-button, .html-editor .combo-box, .html-editor .color-picker
+{
+    -fx-background-color: white;
+}
+
+.html-editor .button:hover, .html-editor .toggle-button:hover, .html-editor .combo-box:hover, .html-editor .color-picker:hover
+{
+    -fx-background-color: lightgrey;
+}
+
+.html-editor-background 
+{
+    visibility: hidden;
+}
+
+.html-editor-foreground
+{
+    visibility: hidden;
+}
+
+.font-menu-button {
+  -fx-pref-width: 80;
+}
