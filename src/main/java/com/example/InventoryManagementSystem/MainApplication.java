@@ -17,6 +17,9 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseHandler.connectDatabase("inventory.db");
+        if (DatabaseHandler.init) DatabaseHandler.initDatabase();
         launch();
+        DatabaseHandler.closeDatabase();
     }
 }

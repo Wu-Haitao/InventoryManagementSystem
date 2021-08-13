@@ -4,6 +4,8 @@ module com.example.InventoryManagementSystem {
     requires javafx.web;
     requires org.kordamp.bootstrapfx.core;
     requires com.jfoenix;
+    requires java.sql;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     opens com.example.InventoryManagementSystem to javafx.fxml;
     opens com.example.InventoryManagementSystem.Controller to javafx.fxml;

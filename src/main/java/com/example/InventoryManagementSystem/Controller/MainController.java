@@ -1,11 +1,14 @@
 package com.example.InventoryManagementSystem.Controller;
 
 import com.example.InventoryManagementSystem.*;
+import com.jfoenix.controls.JFXTextField;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
+    private Asset parentAsset = Asset.rootAsset;
 
     @FXML
     private AnchorPane root;
@@ -25,26 +29,35 @@ public class MainController {
     private Label username_label;
 
     @FXML
-    private Button btn_logout;
+    private JFXTextField tag_input, qty_input;
 
     @FXML
-    private Button btn_update;
+    private Label tagLabel, makeLabel, modelLabel, partNoLabel, rangeLabel, qtyLabel, locationLabel;
 
     @FXML
-    private TextField sku_input, name_input, qty_input;
+    private WebView remarkLabel;
 
     @FXML
-    private TableView<TableItem> table;
+    private TableView<Asset> table;
+
+    @FXML
+    private TableColumn<Asset, String> colTag, colMake, colModel, colPartNo, colRange, colLocation, colAction;
+
+    @FXML
+    private TableColumn<Asset, Integer> colQty;
 
     @FXML
     Label item_count;
 
-    @FXML
-    Label sku_text, name_text, qty_text;
+    private static MainController controller;
 
-    @FXML
-    WebView description_text;
+    public static void setController(MainController controller) {
+        MainController.controller = controller;
+    }
 
+    public static MainController getController() {
+        return controller;
+    }
 
     private void switchToLoginStage() throws IOException {
         Stage stage = StageManager.switchToStage(StageInfo.LOGIN_STAGE);
@@ -54,7 +67,7 @@ public class MainController {
     }
 
     @FXML
-    protected void setBtn_logout() throws IOException {
+    protected void logout() throws IOException {
         switchToLoginStage();
     }
 
@@ -71,18 +84,12 @@ public class MainController {
         handleFilterChange();
     }
 
-    /*@FXML
-    protected void clearRadioBtnSelect(Event event) {
-        radioBtnSelect = "";
-    }*/
-
     @FXML
     protected void handleFilterChange() {
-        TableFilter.setFilter(sku_input.getText(), name_input.getText(), qty_input.getText(), radioBtnSelect);
+        TableFilter.setFilter(tag_input.getText(), qty_input.getText(), radioBtnSelect, parentAsset);
         TableManager.refreshTable(table);
     }
     /*--------------------*/
-
 
     /* Functions and styles of close button and minimize button */
     @FXML
@@ -99,28 +106,31 @@ public class MainController {
     @FXML
     protected void buttonHoverEnter(MouseEvent event) {
         Button thisButton = (Button) event.getSource();
+        ColorAdjust originAdjust = (ColorAdjust) thisButton.getEffect();
         ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(-0.1);
+        if (originAdjust == null) {
+            colorAdjust.setBrightness(-0.2);
+        }
+        else {
+            colorAdjust.setBrightness(originAdjust.getBrightness() - 0.2);
+        }
         thisButton.setEffect(colorAdjust);
     }
 
     @FXML
     protected void buttonHoverExit(MouseEvent event) {
         Button thisButton = (Button) event.getSource();
+        ColorAdjust originAdjust = (ColorAdjust) thisButton.getEffect();
         ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(0);
+        if (originAdjust == null) {
+            colorAdjust.setBrightness(0);
+        }
+        else {
+            colorAdjust.setBrightness(originAdjust.getBrightness() + 0.2);
+        }
         thisButton.setEffect(colorAdjust);
     }
     /*--------------------*/
-
-    @FXML
-    protected void setBtn_update() {
-        for (int i=0; i<100; i++) {
-            table.getItems().add(new TableItem("K00" + Integer.toString(i), "Nothing", i));
-        }
-        table.refresh();
-    }
-
 
     /* Make the window draggable */
     private double xOffset = 0;
@@ -141,25 +151,61 @@ public class MainController {
     }
     /*--------------------*/
 
+    @FXML
+    protected void backToParent() {
+        Asset newParentAsset = DatabaseHandler.getAssetWithTag(parentAsset.getParentTag());
+        if (newParentAsset == null) return;
+        reloadWindow(newParentAsset);
+    }
+
+    public void reloadWindow(Asset newParentAsset) {
+        parentAsset = newParentAsset;
+        initDescriptionPanel();
+        tag_input.setText("");
+        qty_input.setText("");
+        handleFilterChange();
+    }
+
+    @FXML
+    protected void switchToDescriptionStage() throws IOException {
+        AssetDescriptionController.selectedAsset = parentAsset;
+        Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_VIEW);
+        stage.show();
+    }
+
     /* Initialization */
+    private void setDescriptionPanel(Asset asset) {
+        tagLabel.setText(asset.getTag());
+        makeLabel.setText(asset.getManufacturerName());
+        modelLabel.setText(asset.getModel());
+        partNoLabel.setText(asset.getPartNo());
+        rangeLabel.setText(asset.getRange());
+        qtyLabel.setText(Integer.toString(asset.getQty()));
+        locationLabel.setText(asset.getLocation());
+        WebEngine webEngine = remarkLabel.getEngine();
+        webEngine.loadContent(asset.getRemark());
+    }
+
+    private void initDescriptionPanel() {
+        setDescriptionPanel(parentAsset);
+    }
+
     private void initUsername() {
         username_label.setText(Session.getUsername());
     }
 
     private void initTable() {
-        TableManager.initTable(table);
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                sku_text.setText(newValue.getSku());
-                name_text.setText(newValue.getName());
-                qty_text.setText(Integer.toString(newValue.getQty()));
-                WebEngine webEngine = description_text.getEngine();
-                webEngine.loadContent(newValue.getDescription());
-            }
-        });
-        table.getItems().addListener((ListChangeListener<TableItem>) observable -> {
+        TableManager.initTable(table, colTag, colMake, colModel, colPartNo, colRange, colQty, colLocation, colAction);
+        item_count.setText(Integer.toString(table.getItems().size()));
+        table.getItems().addListener((ListChangeListener<Asset>) observable -> {
             item_count.setText(Integer.toString(observable.getList().size()));
         });
+    }
+
+    private void initFilter() {
+        tag_input.setText("");
+        qty_input.setText("");
+        TableFilter.setFilter(tag_input.getText(), qty_input.getText(), "More", parentAsset);
     }
 
     private void initQtyInput() {
@@ -175,8 +221,11 @@ public class MainController {
     @FXML
     public void initialize() {
         initUsername();
+        initFilter();
         initTable();
         initQtyInput();
+        initDescriptionPanel();
+        System.out.println("main stage");
     }
     /*--------------------*/
 }

@@ -1,131 +1,63 @@
 package com.example.InventoryManagementSystem;
 
-import java.util.List;
-
 public class Asset {
-    public static boolean findInDatabase(String tag) {
-        //find in database;
-        return false;
-    }
-    public static List<Asset> getAllAssets() {
-        return null;
-    }
+    public static Asset rootAsset = new Asset("root", new AssetDetails("root","root","root","","root","<p>root</p>",0,0,0), "");
 
-    private String tag, manufacturerName, partNo, rangeUnit, location, remark;
-    private Integer qty, rangeMin, rangeMax;
-    private List<Integer> accessoryList;
-    private boolean inDatabase;
+    private String tag;
+    private AssetDetails details;
+    private String parentTag;
+
+    public Asset(String tag, AssetDetails details, String parentTag) {
+        this.tag = tag;
+        this.details = details;
+        this.parentTag = parentTag;
+    }
 
     public String getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public String getParentTag() {
+        return parentTag;
     }
 
     public String getManufacturerName() {
-        return manufacturerName;
+        return details.manufacturerName;
     }
 
-    public void setManufacturerName(String manufacturerName) {
-        this.manufacturerName = manufacturerName;
+    public String getModel() {
+        return details.model;
     }
 
     public String getPartNo() {
-        return partNo;
-    }
-
-    public void setPartNo(String partNo) {
-        this.partNo = partNo;
-    }
-
-    public String getRangeUnit() {
-        return rangeUnit;
-    }
-
-    public void setRangeUnit(String rangeUnit) {
-        this.rangeUnit = rangeUnit;
+        return details.partNo;
     }
 
     public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+        return details.location;
     }
 
     public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getQty() {
-        return qty;
-    }
-
-    public void setQty(Integer qty) {
-        this.qty = qty;
+        return details.remark;
     }
 
     public Integer getRangeMin() {
-        return rangeMin;
-    }
-
-    public void setRangeMin(Integer rangeMin) {
-        this.rangeMin = rangeMin;
+        return details.rangeMin;
     }
 
     public Integer getRangeMax() {
-        return rangeMax;
+        return details.rangeMax;
     }
 
-    public void setRangeMax(Integer rangeMax) {
-        this.rangeMax = rangeMax;
+    public String getRangeUnit() {
+        return details.rangeUnit;
     }
 
-    public List<Integer> getAccessoryList() {
-        return accessoryList;
+    public String getRange() {
+        return String.format("%d - %d %s", details.rangeMin, details.rangeMax, details.rangeUnit);
     }
 
-    public void setAccessoryList(List<Integer> accessoryList) {
-        this.accessoryList = accessoryList;
-    }
-
-    public boolean isInDatabase() {
-        return inDatabase;
-    }
-
-    public void setInDatabase(boolean inDatabase) {
-        this.inDatabase = inDatabase;
-    }
-
-
-
-    public Asset(String tag, String manufacturerName, String partNo, Integer rangeMin, Integer rangeMax, String rangeUnit, Integer qty, String location, String remark) {
-        this.tag = tag;
-        this.manufacturerName = manufacturerName;
-        this.partNo = partNo;
-        this.rangeMin = rangeMin;
-        this.rangeMax = rangeMax;
-        this.rangeUnit = rangeUnit;
-        this.qty = qty;
-        this.location = location;
-        this.remark = remark;
-    }
-
-    public void applyToDatabase() {
-        if (Asset.findInDatabase(this.tag)) {
-            //if in database
-            return;
-        }
-        else {
-            //if not in database
-            return;
-        }
+    public Integer getQty() {
+        return details.qty;
     }
 }

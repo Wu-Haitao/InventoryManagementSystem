@@ -1,5 +1,6 @@
 package com.example.InventoryManagementSystem;
 
+import com.example.InventoryManagementSystem.Controller.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,6 +18,10 @@ public class StageManager {
         stage.setScene(scene);
         stage.initStyle(StageInfo.getStyle(stageName));
         stage.setResizable(StageInfo.getResizable(stageName));
+        if (stageName == StageInfo.MAIN_STAGE) {
+            MainController.setController(fxmlLoader.getController());
+            //getController() only works after load()
+        }
         return stage;
     }
 }

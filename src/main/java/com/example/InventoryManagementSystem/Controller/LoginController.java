@@ -40,7 +40,7 @@ public class LoginController {
                 });
                 timer.cancel();
             }
-        }, 1000);
+        }, 500);
     }
 
     @FXML
@@ -48,14 +48,12 @@ public class LoginController {
         boolean check = LoginVerifier.verify(username.getText(), password.getText());
         promptMsg.getStyleClass().removeAll("lbl", "lbl-danger", "lbl-success");
         if (check) {
-            //promptMsg.setTextFill(new Color(0, 1.0, 0, 1.0));
             promptMsg.getStyleClass().addAll("lbl", "lbl-success");
             promptMsg.setText(" - Login successful! - ");
             Session.setUsername(username.getText());
             switchToMainStage();
         }
         else {
-            //promptMsg.setTextFill(new Color(1.0, 0, 0, 1.0));
             promptMsg.getStyleClass().addAll("lbl", "lbl-danger");
             promptMsg.setText(" - Login failed! - ");
         }
