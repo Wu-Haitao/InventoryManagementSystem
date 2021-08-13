@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
@@ -14,14 +15,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AddController {
+public class EditController {
     public static Asset selectedAsset;
 
     @FXML
     AnchorPane root;
 
     @FXML
-    JFXTextArea tagInput, makeInput, modelInput, partNoInput, locationInput;
+    Label tagLabel;
+
+    @FXML
+    JFXTextArea makeInput, modelInput, partNoInput, locationInput;
 
     @FXML
     JFXTextField rangeMinInput, rangeMaxInput, rangeUnitInput, qtyInput;
@@ -35,13 +39,13 @@ public class AddController {
     private Asset accessory;
 
     @FXML
-    protected void saveAddition() {
+    protected void saveEdition() {
         Stage thisStage = (Stage)root.getScene().getWindow();
         Task<Void> save = new Task<Void>() {
             boolean result;
             @Override
             protected Void call() throws Exception {
-                accessory = new Asset(tagInput.getText(),
+                accessory = new Asset(tagLabel.getText(),
                         new AssetDetails(makeInput.getText(),
                                 modelInput.getText(),
                                 partNoInput.getText(),
@@ -51,14 +55,13 @@ public class AddController {
                                 (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
                                 (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
                                 (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())),
-                        selectedAsset.getTag());
-                result = DatabaseHandler.addAsset(accessory);
+                        selectedAsset.getParentTag());
+                result = DatabaseHandler.updateAsset(accessory);
                 return null;
             }
             @Override
             protected void succeeded() {
                 if (result) thisStage.close();
-                else tagInput.setText("Repeated asset tags not allowed");
             }
         };
         new Thread(save).start();
@@ -72,13 +75,27 @@ public class AddController {
     }
 
     @FXML
-    protected void editRemark() throws IOException  {
+    protected void editRemark() throws IOException {
         Stage stage = StageManager.switchToStage(StageInfo.TEXT_INPUT_STAGE);
         stage.setOnHiding((event) -> {
             remark = TextInputController.text;
             setRemark();
         });
-       stage.show();
+        stage.show();
+    }
+
+    private void fillAssetDetails() {
+        tagLabel.setText(selectedAsset.getTag());
+        makeInput.setText(selectedAsset.getManufacturerName());
+        modelInput.setText(selectedAsset.getModel());
+        partNoInput.setText(selectedAsset.getPartNo());
+        rangeMinInput.setText(Integer.toString(selectedAsset.getRangeMin()));
+        rangeMaxInput.setText(Integer.toString(selectedAsset.getRangeMax()));
+        rangeUnitInput.setText(selectedAsset.getRangeUnit());
+        qtyInput.setText(Integer.toString(selectedAsset.getQty()));
+        locationInput.setText(selectedAsset.getLocation());
+        remark = selectedAsset.getRemark();
+        setRemark();
     }
 
     private void initNumericInput() {
@@ -108,5 +125,6 @@ public class AddController {
     @FXML
     private void initialize() {
         initNumericInput();
+        fillAssetDetails();
     }
 }

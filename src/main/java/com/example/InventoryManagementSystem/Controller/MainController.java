@@ -151,6 +151,17 @@ public class MainController {
     }
 
     @FXML
+    private void switchToEditStage() throws IOException {
+        EditController.selectedAsset = parentAsset;
+        Stage stage = StageManager.switchToStage(StageInfo.EDIT_STAGE);
+        stage.setOnHiding((event) -> {
+            TableManager.refreshTable(table);
+            refreshParentAsset();
+        });
+        stage.show();
+    }
+
+    @FXML
     protected void logout() throws IOException {
         switchToLoginStage();
     }
@@ -182,7 +193,21 @@ public class MainController {
         stage.show();
     }
 
-    /* Initialization */
+    private void refreshParentAsset() {
+        Task<Void> refresh = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                parentAsset = DatabaseHandler.getAssetWithTag(parentAsset.getTag());
+                return null;
+            }
+            @Override
+            protected void succeeded() {
+                setDescriptionPanel(parentAsset);
+            }
+        };
+        new Thread(refresh).start();
+    }
+
     private void setDescriptionPanel(Asset asset) {
         tagLabel.setText(asset.getTag());
         makeLabel.setText(asset.getManufacturerName());
@@ -195,6 +220,7 @@ public class MainController {
         webEngine.loadContent(asset.getRemark());
     }
 
+    /* Initialization */
     private void initDescriptionPanel() {
         setDescriptionPanel(parentAsset);
     }

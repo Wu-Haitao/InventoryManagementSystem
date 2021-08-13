@@ -8,7 +8,8 @@ public enum StageInfo {
     MAIN_STAGE,
     TEXT_INPUT_STAGE,
     ASSET_DESCRIPTION_STAGE,
-    ADD_STAGE;
+    ADD_STAGE,
+    EDIT_STAGE;
 
     public static String getFXML(StageInfo stageName) {
         return switch (stageName) {
@@ -17,6 +18,7 @@ public enum StageInfo {
             case TEXT_INPUT_STAGE -> "text-input-view.fxml";
             case ASSET_DESCRIPTION_STAGE -> "asset-description-view.fxml";
             case ADD_STAGE -> "add-view.fxml";
+            case EDIT_STAGE -> "edit-view.fxml";
         };
     }
 
@@ -26,7 +28,7 @@ public enum StageInfo {
             case MAIN_STAGE -> new int[]{1200, 650};
             case TEXT_INPUT_STAGE -> new int[]{500, 250};
             case ASSET_DESCRIPTION_STAGE -> new int[]{400, 500};
-            case ADD_STAGE -> new int[]{400, 600};
+            case ADD_STAGE, EDIT_STAGE -> new int[]{400, 600};
         };
     }
 
@@ -37,26 +39,27 @@ public enum StageInfo {
             case TEXT_INPUT_STAGE -> "Input";
             case ASSET_DESCRIPTION_STAGE -> "Description";
             case ADD_STAGE -> "Add";
+            case EDIT_STAGE -> "Edit";
         };
     }
 
     public static StageStyle getStyle(StageInfo stageName) {
         return switch (stageName) {
-            case LOGIN_STAGE, TEXT_INPUT_STAGE, ASSET_DESCRIPTION_STAGE, ADD_STAGE -> StageStyle.UTILITY;
+            case LOGIN_STAGE, TEXT_INPUT_STAGE, ASSET_DESCRIPTION_STAGE, ADD_STAGE, EDIT_STAGE -> StageStyle.UTILITY;
             case MAIN_STAGE -> StageStyle.UNDECORATED;
         };
     }
 
     public static boolean getResizable(StageInfo stageName) {
         return switch (stageName) {
-            case LOGIN_STAGE, MAIN_STAGE, TEXT_INPUT_STAGE, ASSET_DESCRIPTION_STAGE, ADD_STAGE -> false;
+            case LOGIN_STAGE, MAIN_STAGE, TEXT_INPUT_STAGE, ASSET_DESCRIPTION_STAGE, ADD_STAGE, EDIT_STAGE -> false;
             default -> true;
         };
     }
 
     public static Modality getModality(StageInfo stageName) {
         return switch (stageName) {
-            case ADD_STAGE, TEXT_INPUT_STAGE -> Modality.APPLICATION_MODAL;
+            case ADD_STAGE, EDIT_STAGE, TEXT_INPUT_STAGE -> Modality.APPLICATION_MODAL;
             default -> Modality.NONE;
         };
     }

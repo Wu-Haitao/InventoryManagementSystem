@@ -79,7 +79,7 @@ public class DatabaseHandler {
                 rs.getString("PARTNO"),
                 rs.getString("RANGEUNIT"),
                 rs.getString("LOCATION"),
-                rs.getString("REMARK"),
+                rs.getString("REMARK").replace('\"', '\''),
                 rs.getInt("QTY"),
                 rs.getInt("RANGEMIN"),
                 rs.getInt("RANGEMAX"));
@@ -90,7 +90,7 @@ public class DatabaseHandler {
         Asset asset = null;
         if (tag.equals("root")) return Asset.rootAsset;
         try {
-            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s'", tag));
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", tag));
             asset = getAssetFromResultSet(rs);
         }
         catch (SQLException e) {
@@ -102,7 +102,7 @@ public class DatabaseHandler {
     public static List<Asset> getChildAssets(Asset parentAsset) {
         List<Asset> assets = new ArrayList<>();
         try {
-            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE PARENTTAG=='%s'", parentAsset.getTag()));
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE PARENTTAG=='%s';", parentAsset.getTag()));
             while (rs.next()) {
                 assets.add(getAssetFromResultSet(rs));
             }
@@ -141,7 +141,7 @@ public class DatabaseHandler {
                     asset.getRangeUnit(),
                     asset.getQty(),
                     asset.getLocation(),
-                    asset.getRemark()));
+                    asset.getRemark().replace('\'', '\"')));
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -165,7 +165,7 @@ public class DatabaseHandler {
     public static boolean updateAsset(Asset asset) {
         if (!findInDatabase(asset.getTag())) return false;
         try {
-            execCommandUpdate(String.format("UPDATE ASSETS SET MAKE='%s',MODEL='%s',PARTNO='%s',RANGEMIN=%d,RANGEMAX=%d,RANGEUNIT='%s',QTY=%d,LOCATION='%s',REMARK='%s',PARENTTAG='%s' WHERE TAG=='%s'",
+            execCommandUpdate(String.format("UPDATE ASSETS SET MAKE='%s',MODEL='%s',PARTNO='%s',RANGEMIN=%d,RANGEMAX=%d,RANGEUNIT='%s',QTY=%d,LOCATION='%s',REMARK='%s',PARENTTAG='%s' WHERE TAG=='%s';",
                     asset.getManufacturerName(),
                     asset.getModel(),
                     asset.getPartNo(),
@@ -174,7 +174,7 @@ public class DatabaseHandler {
                     asset.getRangeUnit(),
                     asset.getQty(),
                     asset.getLocation(),
-                    asset.getRemark(),
+                    asset.getRemark().replace('\'', '\"'),
                     asset.getParentTag(),
                     asset.getTag()));
         }
