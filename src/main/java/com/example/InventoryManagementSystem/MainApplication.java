@@ -1,6 +1,7 @@
 package com.example.InventoryManagementSystem;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,8 +18,15 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        DatabaseHandler.connectDatabase("inventory.db");
-        if (DatabaseHandler.init) DatabaseHandler.initDatabase();
+        Task<Void> connectDatabase = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                DatabaseHandler.connectDatabase("inventory.db");
+                if (DatabaseHandler.init) DatabaseHandler.initDatabase();
+                return null;
+            }
+        };
+        new Thread(connectDatabase).start();
         launch();
         DatabaseHandler.closeDatabase();
     }

@@ -7,6 +7,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -26,14 +27,25 @@ public class TableManager {
         ObservableList<Asset> items = FXCollections.observableArrayList();
         List<Asset> assets = DatabaseHandler.getChildAssets(TableFilter.getParentAsset());
         items.addAll(assets);
-        tableItems = items;
+        tableItems = TableFilter.getFilteredResult(items);
     }
 
     public static void refreshTable(TableView<Asset> table) {
-        table.getItems().clear();
-        retrieveTableItemsData();
-        table.getItems().addAll(TableFilter.getFilteredResult(tableItems));
-        table.refresh();
+        Task<Void> refresh = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                retrieveTableItemsData();
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                table.getItems().clear();
+                table.getItems().addAll(tableItems);
+                table.refresh();
+            }
+        };
+        new Thread(refresh).start();
     }
 
     public static void initTable(TableView<Asset> table,
@@ -71,7 +83,7 @@ public class TableManager {
                     button1.setOnAction(actionEvent -> {
                         AssetDescriptionController.selectedAsset = this.getTableRow().getItem();
                         try {
-                            Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_VIEW);
+                            Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_STAGE);
                             stage.show();
                         }
                         catch (IOException e) {

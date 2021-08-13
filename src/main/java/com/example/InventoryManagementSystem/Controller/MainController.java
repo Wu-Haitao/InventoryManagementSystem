@@ -2,13 +2,12 @@ package com.example.InventoryManagementSystem.Controller;
 
 import com.example.InventoryManagementSystem.*;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
@@ -57,23 +56,6 @@ public class MainController {
 
     public static MainController getController() {
         return controller;
-    }
-
-    private void switchToLoginStage() throws IOException {
-        Stage stage = StageManager.switchToStage(StageInfo.LOGIN_STAGE);
-        Stage thisStage = (Stage) root.getScene().getWindow();
-        stage.show();
-        thisStage.close();
-    }
-
-    @FXML
-    protected void logout() throws IOException {
-        switchToLoginStage();
-    }
-
-    @FXML
-    protected void cancelFocus() {
-        root.requestFocus();
     }
 
     /* Filter */
@@ -151,6 +133,33 @@ public class MainController {
     }
     /*--------------------*/
 
+    private void switchToLoginStage() throws IOException {
+        Stage stage = StageManager.switchToStage(StageInfo.LOGIN_STAGE);
+        Stage thisStage = (Stage) root.getScene().getWindow();
+        stage.show();
+        thisStage.close();
+    }
+
+    @FXML
+    private void switchToAddStage() throws IOException {
+        AddController.selectedAsset = parentAsset;
+        Stage stage = StageManager.switchToStage(StageInfo.ADD_STAGE);
+        stage.setOnHiding((event) -> {
+            TableManager.refreshTable(table);
+        });
+        stage.show();
+    }
+
+    @FXML
+    protected void logout() throws IOException {
+        switchToLoginStage();
+    }
+
+    @FXML
+    protected void cancelFocus() {
+        root.requestFocus();
+    }
+
     @FXML
     protected void backToParent() {
         Asset newParentAsset = DatabaseHandler.getAssetWithTag(parentAsset.getParentTag());
@@ -169,7 +178,7 @@ public class MainController {
     @FXML
     protected void switchToDescriptionStage() throws IOException {
         AssetDescriptionController.selectedAsset = parentAsset;
-        Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_VIEW);
+        Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_STAGE);
         stage.show();
     }
 
@@ -225,7 +234,6 @@ public class MainController {
         initTable();
         initQtyInput();
         initDescriptionPanel();
-        System.out.println("main stage");
     }
     /*--------------------*/
 }

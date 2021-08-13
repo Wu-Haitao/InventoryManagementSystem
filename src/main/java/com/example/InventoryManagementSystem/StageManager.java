@@ -16,6 +16,7 @@ public class StageManager {
         Stage stage = new Stage();
         stage.setTitle(StageInfo.getTitle(stageName));
         stage.setScene(scene);
+        stage.initModality(StageInfo.getModality(stageName));
         stage.initStyle(StageInfo.getStyle(stageName));
         stage.setResizable(StageInfo.getResizable(stageName));
         if (stageName == StageInfo.MAIN_STAGE) {
@@ -25,3 +26,4 @@ public class StageManager {
         return stage;
     }
 }
+

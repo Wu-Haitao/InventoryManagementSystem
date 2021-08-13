@@ -145,7 +145,7 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="EDIT" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btn_add" alignment="BASELINE_LEFT" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" text="Add" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0">
+                  <Button fx:id="btn_add" alignment="BASELINE_LEFT" focusTraversable="false" mnemonicParsing="false" onAction="#switchToAddStage" prefHeight="30.0" prefWidth="75.0" text="Add" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
