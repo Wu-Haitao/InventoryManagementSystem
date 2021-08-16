@@ -17,6 +17,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -225,6 +226,7 @@
                         <WebView fx:id="remarkLabel" minHeight="-1.0" minWidth="-1.0" prefHeight="45.0" prefWidth="140.0" />
                      </children>
                   </VBox>
+                  <Pane fx:id="maskPane" style="-fx-background-color: white;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0" />
                </children>
             </AnchorPane>
             <Separator layoutX="20.0" layoutY="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" />
@@ -233,7 +235,7 @@
       </AnchorPane>
     <AnchorPane layoutY="57.0" minHeight="0.0" minWidth="0.0" prefWidth="900.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0">
          <children>
-            <TableView fx:id="table" styleClass="mylistview" stylesheets="@tableview.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="table" styleClass="mytableview" stylesheets="@tableview.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="colTag" editable="false" minWidth="20" prefWidth="-1.0" text="Tag" />
                 <TableColumn fx:id="colMake" editable="false" minWidth="20" prefWidth="-1.0" text="Make" />

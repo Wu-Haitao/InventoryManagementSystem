@@ -1,30 +1,30 @@
-.mylistview .scroll-bar:horizontal {
+.mytableview .scroll-bar:horizontal {
   -fx-opacity: 0%;
 }
 
-.mylistview .scroll-bar:vertical {
+.mytableview .scroll-bar:vertical {
   -fx-background-color: transparent;
 }
 
-.mylistview .scroll-bar:vertical .track{
+.mytableview .scroll-bar:vertical .track{
   -fx-background-color:transparent;
   -fx-border-color:derive(gray,80%);
-  -fx-background-radius: 2em;
+  -fx-background-radius:2em;
   -fx-border-radius:2em;
 }
 
-.mylistview .increment-button,
-.mylistview .decrement-button {
+.mytableview .increment-button,
+.mytableview .decrement-button {
     -fx-background-color:transparent;
 }
 
-.mylistview .scroll-bar:vertical .thumb {
+.mytableview .scroll-bar:vertical .thumb {
   -fx-background-color: derive(#428bca, -6.5%);
   -fx-background-insets: 2, 0, 0;
-  -fx-background-radius: 2em;
+  -fx-background-radius:2em;
 }
 
-.mylistview .scroll-bar:vertical .thumb:pressed {
+.mytableview .scroll-bar:vertical .thumb:pressed {
   -fx-background-color: derive(#428bca, -13%);
 }
 

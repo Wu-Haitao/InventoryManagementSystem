@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -23,6 +24,9 @@ public class MainController {
 
     @FXML
     private AnchorPane root;
+
+    @FXML
+    private Pane maskPane;
 
     @FXML
     private Label username_label;
@@ -217,7 +221,9 @@ public class MainController {
         qtyLabel.setText(Integer.toString(asset.getQty()));
         locationLabel.setText(asset.getLocation());
         WebEngine webEngine = remarkLabel.getEngine();
+        webEngine.setUserStyleSheetLocation(MainApplication.class.getResource("webview-noscroll.css").toExternalForm());
         webEngine.loadContent(asset.getRemark());
+        maskPane.setVisible(parentAsset.equals(Asset.rootAsset));
     }
 
     /* Initialization */

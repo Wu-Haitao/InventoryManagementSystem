@@ -29,7 +29,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="tagInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" />
+                  <JFXTextArea fx:id="tagInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -39,7 +39,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="makeInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" />
+                  <JFXTextArea fx:id="makeInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -49,7 +49,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="modelInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" />
+                  <JFXTextArea fx:id="modelInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -59,7 +59,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="partNoInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" />
+                  <JFXTextArea fx:id="partNoInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -69,10 +69,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMinInput" layoutX="85.0" />
+                  <JFXTextField fx:id="rangeMinInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets top="13.0" />
                </VBox.margin>
             </Group>
             <Group>
@@ -82,10 +82,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMaxInput" layoutX="85.0" />
+                  <JFXTextField fx:id="rangeMaxInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets top="13.0" />
                </VBox.margin>
             </Group>
             <Group>
@@ -95,10 +95,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeUnitInput" layoutX="85.0" />
+                  <JFXTextField fx:id="rangeUnitInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets top="13.0" />
                </VBox.margin>
             </Group>
             <Group>
@@ -108,10 +108,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="qtyInput" layoutX="85.0" />
+                  <JFXTextField fx:id="qtyInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets top="13.0" />
                </VBox.margin>
             </Group>
             <Group>
@@ -121,8 +121,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="locationInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" />
+                  <JFXTextArea fx:id="locationInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
+               <VBox.margin>
+                  <Insets top="13.0" />
+               </VBox.margin>
             </Group>
             <Group>
                <children>

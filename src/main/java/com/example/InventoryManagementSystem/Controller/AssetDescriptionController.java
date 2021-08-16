@@ -1,6 +1,7 @@
 package com.example.InventoryManagementSystem.Controller;
 
 import com.example.InventoryManagementSystem.Asset;
+import com.example.InventoryManagementSystem.MainApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebEngine;
@@ -24,6 +25,7 @@ public class AssetDescriptionController {
         qtyLabel.setText(Integer.toString(selectedAsset.getQty()));
         locationLabel.setText(selectedAsset.getLocation());
         WebEngine webEngine = remarkLabel.getEngine();
+        webEngine.setUserStyleSheetLocation(MainApplication.class.getResource("webview.css").toExternalForm());
         webEngine.loadContent(selectedAsset.getRemark());
     }
 

@@ -34,7 +34,7 @@ public class DatabaseHandler {
                     " RANGEUNIT    TEXT," +
                     " QTY          INT NOT NULL," +
                     " LOCATION     TEXT," +
-                    " REMARK       TEXT)";
+                    " REMARK       TEXT);";
             statement.executeUpdate(sql);
         }
         catch (SQLException e) {

@@ -68,6 +68,7 @@ public class AddController {
 
     private void setRemark() {
         WebEngine webEngine = remarkView.getEngine();
+        webEngine.setUserStyleSheetLocation(MainApplication.class.getResource("webview.css").toExternalForm());
         webEngine.loadContent(remark);
     }
 
