@@ -97,7 +97,10 @@ public class TableManager {
                     iconView.setFill(Color.WHITE);
                     button2.setGraphic(iconView);
                     button2.getStyleClass().addAll("btn-xs", "btn-info");
-                    button2.setOnAction(actionEvent -> MainController.getController().reloadWindow(this.getTableRow().getItem()));
+                    button2.setOnAction(actionEvent -> {
+                        History.goForward(this.getTableRow().getItem().getTag());
+                        MainController.getController().reloadWindow(this.getTableRow().getItem());
+                    });
 
                     hbox.getChildren().addAll(button1, button2);
 

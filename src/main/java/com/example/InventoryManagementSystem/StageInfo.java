@@ -28,7 +28,8 @@ public enum StageInfo {
             case MAIN_STAGE -> new int[]{1200, 650};
             case TEXT_INPUT_STAGE -> new int[]{500, 250};
             case ASSET_DESCRIPTION_STAGE -> new int[]{400, 500};
-            case ADD_STAGE, EDIT_STAGE -> new int[]{400, 600};
+            case ADD_STAGE -> new int[]{400, 650};
+            case EDIT_STAGE -> new int[]{400, 600};
         };
     }
 

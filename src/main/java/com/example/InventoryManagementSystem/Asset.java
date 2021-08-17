@@ -1,24 +1,28 @@
 package com.example.InventoryManagementSystem;
 
-public class Asset {
-    public static Asset rootAsset = new Asset("root", new AssetDetails("root","root","root","","root","<p>root</p>",0,0,0), "");
+import java.util.List;
 
+public class Asset {
     private String tag;
     private AssetDetails details;
-    private String parentTag;
+    private List<String> accessories;
 
-    public Asset(String tag, AssetDetails details, String parentTag) {
+    public Asset(String tag, AssetDetails details, List<String> accessories) {
         this.tag = tag;
         this.details = details;
-        this.parentTag = parentTag;
+        this.accessories = accessories;
     }
 
     public String getTag() {
         return tag;
     }
 
-    public String getParentTag() {
-        return parentTag;
+    public List<String> getAccessories() {
+        return accessories;
+    }
+
+    public AssetDetails getDetails() {
+        return details;
     }
 
     public String getManufacturerName() {

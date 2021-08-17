@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.InventoryManagementSystem.Controller.AddController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cancelFocus" prefHeight="650.0" prefWidth="400.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.InventoryManagementSystem.Controller.AddController">
    <children>
       <Label layoutX="30.0" layoutY="15.0" text="Add">
          <font>
@@ -29,7 +30,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="tagInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="tagInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -39,7 +40,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="makeInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="makeInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -49,7 +50,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="modelInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="modelInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -59,7 +60,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="partNoInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="partNoInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -69,7 +70,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMinInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeMinInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -82,7 +83,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMaxInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeMaxInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -95,7 +96,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeUnitInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeUnitInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -108,7 +109,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="qtyInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="qtyInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -121,7 +122,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="locationInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="locationInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -134,8 +135,8 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <WebView fx:id="remarkView" layoutX="85.0" prefHeight="80.0" prefWidth="220.0" />
-                  <Button fx:id="editBtn" layoutY="30.0" mnemonicParsing="false" onAction="#editRemark" text="Edit">
+                  <WebView fx:id="remarkView" focusTraversable="false" layoutX="85.0" prefHeight="80.0" prefWidth="220.0" />
+                  <Button fx:id="editBtn" focusTraversable="false" layoutY="30.0" mnemonicParsing="false" onAction="#editRemark" text="Edit">
                      <graphic>
                         <FontAwesomeIconView glyphName="EDIT" />
                      </graphic>
@@ -146,9 +147,26 @@
                   </Button>
                </children>
             </Group>
+            <Group>
+               <children>
+                  <JFXCheckBox fx:id="copyCheck" checkedColor="#4059a9" focusTraversable="false" text="Copy accessories list from">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXCheckBox>
+                  <Label fx:id="copyAssetLabel" layoutX="220.0" prefWidth="85.0" text="None">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="-10.0" />
+               </VBox.margin>
+            </Group>
          </children>
       </VBox>
-      <Button fx:id="saveBtn" layoutX="300.0" layoutY="25.0" mnemonicParsing="false" onAction="#saveAddition" text="Save">
+      <Button fx:id="saveBtn" defaultButton="true" layoutX="300.0" layoutY="25.0" mnemonicParsing="false" onAction="#saveAddition" text="Save">
          <styleClass>
             <String fx:value="btn-sm" />
             <String fx:value="btn-primary" />

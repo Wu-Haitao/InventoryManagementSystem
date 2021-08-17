@@ -7,7 +7,7 @@ public class TableFilter {
     private static String tag = "";
     private static Integer qty = null;
     private static String qtyCompare = "";
-    private static Asset parentAsset = Asset.rootAsset;
+    private static Asset parentAsset;
 
     public static ObservableList<Asset> getFilteredResult(ObservableList<Asset> assets) {
         return new FilteredList<>(assets, asset -> {

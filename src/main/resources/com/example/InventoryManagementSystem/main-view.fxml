@@ -96,11 +96,26 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Button focusTraversable="false" layoutX="190.0" layoutY="20.0" mnemonicParsing="false" onAction="#backToParent" onMouseEntered="#buttonHoverEnter" onMouseExited="#buttonHoverExit" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="15.0">
+                  <Button focusTraversable="false" layoutX="190.0" layoutY="20.0" mnemonicParsing="false" onAction="#backToParent" onMouseEntered="#buttonHoverEnter" onMouseExited="#buttonHoverExit" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="15.0">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons8-back-arrow-48.png" />
+                           </image>
+                           <effect>
+                              <ColorAdjust brightness="0.65" />
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
+                     </padding>
+                  </Button>
+                  <Button focusTraversable="false" layoutX="152.0" layoutY="15.0" mnemonicParsing="false" onAction="#copyAccessoriesList" onMouseEntered="#buttonHoverEnter" onMouseExited="#buttonHoverExit" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="15.0">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons8-copy-48.png" />
                            </image>
                            <effect>
                               <ColorAdjust brightness="0.65" />

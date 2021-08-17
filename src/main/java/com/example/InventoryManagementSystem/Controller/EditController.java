@@ -45,7 +45,7 @@ public class EditController {
             boolean result;
             @Override
             protected Void call() throws Exception {
-                accessory = new Asset(tagLabel.getText(),
+                accessory = new Asset(selectedAsset.getTag(),
                         new AssetDetails(makeInput.getText(),
                                 modelInput.getText(),
                                 partNoInput.getText(),
@@ -55,7 +55,7 @@ public class EditController {
                                 (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
                                 (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
                                 (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())),
-                        selectedAsset.getParentTag());
+                        selectedAsset.getAccessories());
                 result = DatabaseHandler.updateAsset(accessory);
                 return null;
             }

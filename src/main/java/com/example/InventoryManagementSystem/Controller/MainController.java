@@ -18,9 +18,10 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class MainController {
-    private Asset parentAsset = Asset.rootAsset;
+    private Asset parentAsset;
 
     @FXML
     private AnchorPane root;
@@ -150,6 +151,7 @@ public class MainController {
         Stage stage = StageManager.switchToStage(StageInfo.ADD_STAGE);
         stage.setOnHiding((event) -> {
             TableManager.refreshTable(table);
+            refreshParentAsset();
         });
         stage.show();
     }
@@ -177,9 +179,19 @@ public class MainController {
 
     @FXML
     protected void backToParent() {
-        Asset newParentAsset = DatabaseHandler.getAssetWithTag(parentAsset.getParentTag());
-        if (newParentAsset == null) return;
-        reloadWindow(newParentAsset);
+        Task<Void> goBack = new Task<Void>() {
+            Asset newParentAsset;
+            @Override
+            protected Void call() throws Exception {
+                newParentAsset = DatabaseHandler.getAssetWithTag(History.goBackward());
+                return null;
+            }
+            @Override
+            protected void succeeded() {
+                reloadWindow(newParentAsset);
+            }
+        };
+        new Thread(goBack).start();
     }
 
     public void reloadWindow(Asset newParentAsset) {
@@ -191,13 +203,18 @@ public class MainController {
     }
 
     @FXML
+    protected void copyAccessoriesList() {
+        AddController.copiedAsset = parentAsset;
+    }
+
+    @FXML
     protected void switchToDescriptionStage() throws IOException {
         AssetDescriptionController.selectedAsset = parentAsset;
         Stage stage = StageManager.switchToStage(StageInfo.ASSET_DESCRIPTION_STAGE);
         stage.show();
     }
 
-    private void refreshParentAsset() {
+    private void refreshParentAsset() { //This is called when current asset is modified
         Task<Void> refresh = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -223,7 +240,7 @@ public class MainController {
         WebEngine webEngine = remarkLabel.getEngine();
         webEngine.setUserStyleSheetLocation(MainApplication.class.getResource("webview-noscroll.css").toExternalForm());
         webEngine.loadContent(asset.getRemark());
-        maskPane.setVisible(parentAsset.equals(Asset.rootAsset));
+        maskPane.setVisible(parentAsset.getTag().equals("root"));
     }
 
     /* Initialization */
@@ -259,13 +276,33 @@ public class MainController {
         }));
     }
 
+    private void initHistory() {
+        History.goForward(parentAsset.getTag());
+    }
+
+    private void initRoot() {
+        Task<Void> init = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                parentAsset = DatabaseHandler.getRoot();
+                return null;
+            }
+            @Override
+            protected void succeeded() {
+                initFilter();
+                initTable();
+                initDescriptionPanel();
+                initHistory();
+            }
+        };
+        new Thread(init).start();
+    }
+
     @FXML
     public void initialize() {
         initUsername();
-        initFilter();
-        initTable();
         initQtyInput();
-        initDescriptionPanel();
+        initRoot();
     }
     /*--------------------*/
 }

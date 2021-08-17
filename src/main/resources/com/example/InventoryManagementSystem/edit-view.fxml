@@ -39,7 +39,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="makeInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="makeInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -49,7 +49,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="modelInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="modelInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -59,7 +59,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="partNoInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="partNoInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
             </Group>
             <Group>
@@ -69,7 +69,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMinInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeMinInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -82,7 +82,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeMaxInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeMaxInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -95,7 +95,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="rangeUnitInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="rangeUnitInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -108,7 +108,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="qtyInput" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
+                  <JFXTextField fx:id="qtyInput" focusTraversable="false" layoutX="85.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -121,7 +121,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextArea fx:id="locationInput" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
+                  <JFXTextArea fx:id="locationInput" focusTraversable="false" layoutX="85.0" prefHeight="40.0" prefWidth="220.0" style="-fx-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) transparent rgba(0,0,0,0.1); -fx-border-radius: 2px  2px 0 0;" stylesheets="@textarea-noscroll.css" />
                </children>
                <VBox.margin>
                   <Insets top="13.0" />
@@ -134,8 +134,8 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <WebView fx:id="remarkView" layoutX="85.0" prefHeight="80.0" prefWidth="220.0" />
-                  <Button fx:id="editBtn" layoutY="30.0" mnemonicParsing="false" onAction="#editRemark" text="Edit">
+                  <WebView fx:id="remarkView" focusTraversable="false" layoutX="85.0" prefHeight="80.0" prefWidth="220.0" />
+                  <Button fx:id="editBtn" focusTraversable="false" layoutY="30.0" mnemonicParsing="false" onAction="#editRemark" text="Edit">
                      <graphic>
                         <FontAwesomeIconView glyphName="EDIT" />
                      </graphic>
