@@ -36,8 +36,6 @@ public class EditController {
     @FXML
     WebView remarkView;
 
-    private Asset accessory;
-
     @FXML
     protected void saveEdition() {
         Stage thisStage = (Stage)root.getScene().getWindow();
@@ -45,7 +43,7 @@ public class EditController {
             boolean result;
             @Override
             protected Void call() throws Exception {
-                accessory = new Asset(selectedAsset.getTag(),
+                Asset asset = new Asset(selectedAsset.getTag(),
                         new AssetDetails(makeInput.getText(),
                                 modelInput.getText(),
                                 partNoInput.getText(),
@@ -55,7 +53,7 @@ public class EditController {
                                 (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
                                 (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
                                 (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())));
-                result = DatabaseHandler.updateAsset(accessory);
+                result = DatabaseHandler.updateAsset(asset);
                 return null;
             }
             @Override

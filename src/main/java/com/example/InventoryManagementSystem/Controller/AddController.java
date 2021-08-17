@@ -43,8 +43,6 @@ public class AddController {
     @FXML
     Label copyAssetLabel;
 
-    private Asset accessory;
-
     @FXML
     protected void cancelFocus() {
         root.requestFocus();
@@ -58,7 +56,7 @@ public class AddController {
             @Override
             protected Void call() throws Exception {
                 boolean applyCopy = (copyCheck.isSelected() && (copiedAsset != null));
-                accessory = new Asset(tagInput.getText(),
+                Asset accessory = new Asset(tagInput.getText(),
                         new AssetDetails(makeInput.getText(),
                                 modelInput.getText(),
                                 partNoInput.getText(),
