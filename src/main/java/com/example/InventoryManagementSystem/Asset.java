@@ -5,20 +5,14 @@ import java.util.List;
 public class Asset {
     private String tag;
     private AssetDetails details;
-    private List<String> accessories;
 
-    public Asset(String tag, AssetDetails details, List<String> accessories) {
+    public Asset(String tag, AssetDetails details) {
         this.tag = tag;
         this.details = details;
-        this.accessories = accessories;
     }
 
     public String getTag() {
         return tag;
-    }
-
-    public List<String> getAccessories() {
-        return accessories;
     }
 
     public AssetDetails getDetails() {

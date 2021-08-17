@@ -54,8 +54,7 @@ public class EditController {
                                 remark,
                                 (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
                                 (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
-                                (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())),
-                        selectedAsset.getAccessories());
+                                (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())));
                 result = DatabaseHandler.updateAsset(accessory);
                 return null;
             }

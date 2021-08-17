@@ -33,14 +33,20 @@ public class DatabaseHandler {
                     " RANGEMIN     INT," +
                     " RANGEMAX     INT," +
                     " RANGEUNIT    TEXT," +
-                    " QTY          INT NOT NULL," +
+                    " QTY          INT," +
                     " LOCATION     TEXT," +
-                    " REMARK       TEXT," +
-                    " ACCESSORIES  TEXT);";
+                    " REMARK       TEXT);";
             statement.executeUpdate(sql);
             sql = "INSERT INTO ASSETS VALUES" +
-                    "('root','','','',0,0,'',0,'','','');";
+                    "('root','','','',0,0,'',0,'','');";
             statement.executeUpdate(sql);
+            sql = "CREATE TABLE ACCESSORIES" +
+                    "(PARENTTAG    TEXT," +
+                    " CHILDTAG     TEXT," +
+                    " CONSTRAINT ACCESSORIES_PK PRIMARY KEY (PARENTTAG, CHILDTAG)," +
+                    " CONSTRAINT ACCESSORIES_FK FOREIGN KEY (PARENTTAG, CHILDTAG) REFERENCES ASSETS(TAG, TAG));";
+            statement.executeUpdate(sql);
+            statement.close();
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -57,10 +63,6 @@ public class DatabaseHandler {
         }
     }
 
-    public static Asset getRoot() {
-        return getAssetWithTag("root");
-    }
-
     public static ResultSet execCommandQuery(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         return statement.executeQuery(sql);
@@ -70,6 +72,10 @@ public class DatabaseHandler {
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
         statement.close();
+    }
+
+    public static Asset getRoot() {
+        return getAssetWithTag("root");
     }
 
     public static Boolean findInDatabase(String tag) {
@@ -93,9 +99,7 @@ public class DatabaseHandler {
                 rs.getInt("QTY"),
                 rs.getInt("RANGEMIN"),
                 rs.getInt("RANGEMAX"));
-        String accessoriesText = rs.getString("ACCESSORIES");
-        List<String> accessories = (accessoriesText.equals(""))? new ArrayList<>():Arrays.asList(accessoriesText.split(","));
-        return new Asset(rs.getString("TAG"), details, accessories);
+        return new Asset(rs.getString("TAG"), details);
     }
 
     public static Asset getAssetWithTag(String tag) {
@@ -112,25 +116,10 @@ public class DatabaseHandler {
 
     public static List<Asset> getChildAssets(Asset parentAsset) {
         List<Asset> assets = new ArrayList<>();
-        for (String childAssetTag:
-             getAssetWithTag(parentAsset.getTag()).getAccessories()) {
-            try {
-                ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", childAssetTag));
-                if (!rs.isClosed()) assets.add(getAssetFromResultSet(rs));
-            }
-            catch (SQLException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        return assets;
-    }
-
-    public static List<Asset> getAllAssets() {
-        List<Asset> assets = new ArrayList<>();
         try {
-            ResultSet rs = execCommandQuery("SELECT * FROM ASSETS;");
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", parentAsset.getTag()));
             while (rs.next()) {
-                assets.add(getAssetFromResultSet(rs));
+                assets.add(getAssetWithTag(rs.getString("CHILDTAG")));
             }
         }
         catch (SQLException e) {
@@ -139,10 +128,31 @@ public class DatabaseHandler {
         return assets;
     }
 
+    public static boolean checkRelation(String parentTag, String childTag) {
+        try {
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s' AND CHILDTAG=='%s';", parentTag, childTag));
+            return !rs.isClosed();
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean addAccessoriesRelation(String parentTag, String childTag) {
+        try {
+            execCommandUpdate(String.format("INSERT INTO ACCESSORIES VALUES('%s', '%s');", parentTag, childTag));
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean addAsset(Asset asset) {
         try {
-            String accessories = (asset.getAccessories().isEmpty())? "":String.join(",", asset.getAccessories());
-            execCommandUpdate(String.format("INSERT INTO ASSETS VALUES ('%s','%s','%s','%s',%d,%d,'%s',%d,'%s','%s','%s');",
+            execCommandUpdate(String.format("INSERT INTO ASSETS VALUES ('%s','%s','%s','%s',%d,%d,'%s',%d,'%s','%s');",
                     asset.getTag(),
                     asset.getManufacturerName(),
                     asset.getModel(),
@@ -152,8 +162,7 @@ public class DatabaseHandler {
                     asset.getRangeUnit(),
                     asset.getQty(),
                     asset.getLocation(),
-                    asset.getRemark().replace('\'', '\"'),
-                    accessories));
+                    asset.getRemark().replace('\'', '\"')));
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -175,8 +184,7 @@ public class DatabaseHandler {
 
     public static boolean updateAsset(Asset asset) {
         try {
-            String accessories = (asset.getAccessories().isEmpty())? "":String.join(",", asset.getAccessories());
-            execCommandUpdate(String.format("UPDATE ASSETS SET MAKE='%s',MODEL='%s',PARTNO='%s',RANGEMIN=%d,RANGEMAX=%d,RANGEUNIT='%s',QTY=%d,LOCATION='%s',REMARK='%s',ACCESSORIES='%s' WHERE TAG=='%s';",
+            execCommandUpdate(String.format("UPDATE ASSETS SET MAKE='%s',MODEL='%s',PARTNO='%s',RANGEMIN=%d,RANGEMAX=%d,RANGEUNIT='%s',QTY=%d,LOCATION='%s',REMARK='%s' WHERE TAG=='%s';",
                     asset.getManufacturerName(),
                     asset.getModel(),
                     asset.getPartNo(),
@@ -186,7 +194,6 @@ public class DatabaseHandler {
                     asset.getQty(),
                     asset.getLocation(),
                     asset.getRemark().replace('\'', '\"'),
-                    accessories,
                     asset.getTag()));
         }
         catch (SQLException e) {

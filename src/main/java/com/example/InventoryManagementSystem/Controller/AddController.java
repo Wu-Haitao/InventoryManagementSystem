@@ -57,6 +57,7 @@ public class AddController {
             boolean result = true;
             @Override
             protected Void call() throws Exception {
+                boolean applyCopy = (copyCheck.isSelected() && (copiedAsset != null));
                 accessory = new Asset(tagInput.getText(),
                         new AssetDetails(makeInput.getText(),
                                 modelInput.getText(),
@@ -66,24 +67,21 @@ public class AddController {
                                 remark,
                                 (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
                                 (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
-                                (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())),
-                        (copyCheck.isSelected() && (copiedAsset != null))? copiedAsset.getAccessories():new ArrayList<String>());
-                if (selectedAsset.getAccessories().contains(accessory.getTag())) {
+                                (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())));
+                if ((selectedAsset.getTag().equals(accessory.getTag())) || DatabaseHandler.checkRelation(selectedAsset.getTag(), accessory.getTag())) {
                     //The accessory is already a child of current asset
                     result = false; //Addition canceled
                 }
                 else {
-                    List<String> tempList = new ArrayList<>(selectedAsset.getAccessories());
-                    tempList.add(accessory.getTag());
                     DatabaseHandler.addAsset(accessory);
-                    DatabaseHandler.updateAsset(new Asset(selectedAsset.getTag(), selectedAsset.getDetails(), tempList));
+                    DatabaseHandler.addAccessoriesRelation(selectedAsset.getTag(), accessory.getTag());
                 }
                 return null;
             }
             @Override
             protected void succeeded() {
                 if (result) thisStage.close();
-                else tagInput.setText("Repeated asset tags not allowed");
+                else tagInput.setText("Operation denied");
             }
         };
         new Thread(save).start();

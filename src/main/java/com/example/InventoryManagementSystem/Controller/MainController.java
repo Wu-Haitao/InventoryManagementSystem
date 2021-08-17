@@ -151,7 +151,6 @@ public class MainController {
         Stage stage = StageManager.switchToStage(StageInfo.ADD_STAGE);
         stage.setOnHiding((event) -> {
             TableManager.refreshTable(table);
-            refreshParentAsset();
         });
         stage.show();
     }
