@@ -4,11 +4,13 @@ import com.example.InventoryManagementSystem.*;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.concurrent.Task;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -20,6 +22,9 @@ public class EditController {
 
     @FXML
     AnchorPane root;
+
+    @FXML
+    Pane loadingPane;
 
     @FXML
     Label tagLabel;
@@ -39,6 +44,8 @@ public class EditController {
     @FXML
     protected void saveEdition() {
         Stage thisStage = (Stage)root.getScene().getWindow();
+        thisStage.setOnCloseRequest(Event::consume); //Disable close button
+        loadingPane.setVisible(true);
         Task<Void> save = new Task<Void>() {
             boolean result;
             @Override
@@ -58,7 +65,9 @@ public class EditController {
             }
             @Override
             protected void succeeded() {
+                thisStage.setOnCloseRequest(null);
                 if (result) thisStage.close();
+                else loadingPane.setVisible(false);
             }
         };
         new Thread(save).start();

@@ -27,6 +27,9 @@ public class MainController {
     private AnchorPane root;
 
     @FXML
+    private Pane loadingPane;
+
+    @FXML
     private Pane maskPane;
 
     @FXML
@@ -199,6 +202,37 @@ public class MainController {
         tag_input.setText("");
         qty_input.setText("");
         handleFilterChange();
+    }
+
+    @FXML
+    protected void deleteAccessory() {
+        Asset selectAsset = table.getSelectionModel().getSelectedItem();
+        if (selectAsset == null) {
+            Alert selectAlert = new Alert(Alert.AlertType.INFORMATION);
+            selectAlert.setHeaderText("Select an accessory to continue");
+            selectAlert.showAndWait();
+            return;
+        }
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        deleteAlert.setHeaderText("Are you sure?");
+        deleteAlert.setContentText("Accessories under this asset may also be deleted");
+        deleteAlert.showAndWait();
+        if (deleteAlert.getResult() == ButtonType.OK) {
+            Task<Void> delete = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    DatabaseHandler.deleteAccessory(parentAsset.getTag(), selectAsset.getTag());
+                    return null;
+                }
+                @Override
+                protected void succeeded() {
+                    TableManager.refreshTable(table);
+                    loadingPane.setVisible(false);
+                }
+            };
+            loadingPane.setVisible(true);
+            new Thread(delete).start();
+        }
     }
 
     @FXML

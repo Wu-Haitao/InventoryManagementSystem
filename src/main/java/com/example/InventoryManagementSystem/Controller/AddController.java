@@ -5,18 +5,20 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.concurrent.Task;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddController {
     public static Asset selectedAsset;
@@ -24,6 +26,9 @@ public class AddController {
 
     @FXML
     AnchorPane root;
+
+    @FXML
+    Pane loadingPane;
 
     @FXML
     JFXTextArea tagInput, makeInput, modelInput, partNoInput, locationInput;
@@ -51,6 +56,8 @@ public class AddController {
     @FXML
     protected void saveAddition() {
         Stage thisStage = (Stage)root.getScene().getWindow();
+        thisStage.setOnCloseRequest(Event::consume); //Disable close button
+        loadingPane.setVisible(true);
         Task<Void> save = new Task<Void>() {
             boolean result = true;
             @Override
@@ -71,7 +78,7 @@ public class AddController {
                     result = false; //Addition canceled
                 }
                 else {
-                    DatabaseHandler.addAsset(accessory);
+                    DatabaseHandler.addAccessory(accessory);
                     DatabaseHandler.addAccessoriesRelation(selectedAsset.getTag(), accessory.getTag());
                     if (applyCopy) DatabaseHandler.copyAccessoriesRelation(copiedAsset.getTag(), accessory.getTag());
                 }
@@ -79,8 +86,12 @@ public class AddController {
             }
             @Override
             protected void succeeded() {
+                thisStage.setOnCloseRequest(null);
                 if (result) thisStage.close();
-                else tagInput.setText("Operation denied");
+                else {
+                    tagInput.setText("Operation denied");
+                    loadingPane.setVisible(false);
+                }
             }
         };
         new Thread(save).start();

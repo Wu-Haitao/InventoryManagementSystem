@@ -11,4 +11,5 @@ module com.example.InventoryManagementSystem {
     opens com.example.InventoryManagementSystem.Controller to javafx.fxml;
 
     exports com.example.InventoryManagementSystem;
+
 }

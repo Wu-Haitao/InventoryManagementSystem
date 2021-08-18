@@ -161,7 +161,7 @@ public class DatabaseHandler {
         }
     }
 
-    public static void addAsset(Asset asset) {
+    public static void addAccessory(Asset asset) {
         try {
             execCommandUpdate(String.format("INSERT INTO ASSETS VALUES ('%s','%s','%s','%s',%d,%d,'%s',%d,'%s','%s');",
                     asset.getTag(),
@@ -180,9 +180,19 @@ public class DatabaseHandler {
         }
     }
 
-    public static boolean deleteAsset(Asset asset) {
+    public static boolean deleteAccessory(String parentAssetTag, String childAssetTag) {
         try {
-            execCommandUpdate(String.format("DELETE FROM ASSETS WHERE TAG=='%s';", asset.getTag()));
+            execCommandUpdate(String.format("DELETE FROM ACCESSORIES WHERE PARENTTAG=='%s' AND CHILDTAG=='%s';", parentAssetTag, childAssetTag));
+            if (!execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE CHILDTAG=='%s';", childAssetTag)).next()) {
+                //This accessory doesn't belong to any asset
+                execCommandUpdate(String.format("DELETE FROM ASSETS WHERE TAG=='%s';", childAssetTag)); //Delete from asset table
+                ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", childAssetTag));
+                while (rs.next()) {
+                    String childTag = rs.getString("CHILDTAG");
+                    deleteAccessory(childAssetTag, childTag);
+                }
+            }
+
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
