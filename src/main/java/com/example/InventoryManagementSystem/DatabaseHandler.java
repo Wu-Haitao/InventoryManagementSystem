@@ -81,7 +81,7 @@ public class DatabaseHandler {
     public static Boolean findInDatabase(String tag) {
         try {
             ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", tag));
-            return (rs.isClosed());
+            return (rs.next());
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -139,18 +139,29 @@ public class DatabaseHandler {
         }
     }
 
-    public static boolean addAccessoriesRelation(String parentTag, String childTag) {
+    public static void addAccessoriesRelation(String parentTag, String childTag) {
         try {
             execCommandUpdate(String.format("INSERT INTO ACCESSORIES VALUES('%s', '%s');", parentTag, childTag));
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
-            return false;
         }
-        return true;
     }
 
-    public static boolean addAsset(Asset asset) {
+    public static void copyAccessoriesRelation(String copiedAssetTag, String newAssetTag) {
+        try {
+            ResultSet rs1 = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", copiedAssetTag));
+            while (rs1.next()) {
+                String childTag = rs1.getString("CHILDTAG");
+                addAccessoriesRelation(newAssetTag, childTag);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void addAsset(Asset asset) {
         try {
             execCommandUpdate(String.format("INSERT INTO ASSETS VALUES ('%s','%s','%s','%s',%d,%d,'%s',%d,'%s','%s');",
                     asset.getTag(),
@@ -166,9 +177,7 @@ public class DatabaseHandler {
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
-            return false;
         }
-        return true;
     }
 
     public static boolean deleteAsset(Asset asset) {

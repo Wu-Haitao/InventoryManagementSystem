@@ -73,6 +73,7 @@ public class AddController {
                 else {
                     DatabaseHandler.addAsset(accessory);
                     DatabaseHandler.addAccessoriesRelation(selectedAsset.getTag(), accessory.getTag());
+                    if (applyCopy) DatabaseHandler.copyAccessoriesRelation(copiedAsset.getTag(), accessory.getTag());
                 }
                 return null;
             }

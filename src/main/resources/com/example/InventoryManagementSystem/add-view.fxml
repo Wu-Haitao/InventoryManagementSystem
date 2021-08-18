@@ -149,12 +149,8 @@
             </Group>
             <Group>
                <children>
-                  <JFXCheckBox fx:id="copyCheck" checkedColor="#4059a9" focusTraversable="false" text="Copy accessories list from">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXCheckBox>
-                  <Label fx:id="copyAssetLabel" layoutX="220.0" prefWidth="85.0" text="None">
+                  <JFXCheckBox fx:id="copyCheck" checkedColor="#4059a9" focusTraversable="false" text="Copy accessories list from" />
+                  <Label fx:id="copyAssetLabel" layoutX="190.0" prefWidth="115.0" text="None">
                      <font>
                         <Font size="14.0" />
                      </font>
