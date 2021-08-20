@@ -1,20 +1,41 @@
 package com.example.InventoryManagementSystem;
 
-import javax.xml.transform.Result;
 import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseHandler {
     private static Connection connection = null;
     public static boolean init = false;
 
-    public static void connectDatabase(String address) {
-        if (!new File(address).exists()) init = true;
+    public static boolean checkDrivers() {
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + address);
+            Class.forName("org.sqlite.JDBC");
+            DriverManager.registerDriver(new org.sqlite.JDBC());
+            return true;
+        } catch (ClassNotFoundException | SQLException exception) {
+            System.err.println(exception.getMessage());
+            return false;
+        }
+    }
+    public static void connectDatabase(String address) {
+        String filePath = address + "/inventory.db";
+        File dir = new File(address);
+        if (!dir.exists()) dir.mkdirs();
+
+        File file = new File(filePath);
+        try {
+            init = file.createNewFile();
+        }
+        catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + filePath);
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());

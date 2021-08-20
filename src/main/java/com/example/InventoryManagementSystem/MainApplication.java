@@ -21,7 +21,8 @@ public class MainApplication extends Application {
         Task<Void> connectDatabase = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                DatabaseHandler.connectDatabase("inventory.db");
+                DatabaseHandler.checkDrivers();
+                DatabaseHandler.connectDatabase(System.getProperty("user.dir").replace("\\", "/") + "/AppData");
                 if (DatabaseHandler.init) DatabaseHandler.initDatabase();
                 return null;
             }
