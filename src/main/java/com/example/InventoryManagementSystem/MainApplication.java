@@ -3,10 +3,10 @@ package com.example.InventoryManagementSystem;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class MainApplication extends Application {
+
     private void switchToLoginStage() throws IOException {
         Stage stage = StageManager.switchToStage(StageInfo.LOGIN_STAGE);
         stage.show();
