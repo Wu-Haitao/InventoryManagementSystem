@@ -4,6 +4,7 @@ import com.example.InventoryManagementSystem.*;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -206,22 +207,25 @@ public class MainController {
 
     @FXML
     protected void deleteAccessory() {
-        Asset selectAsset = table.getSelectionModel().getSelectedItem();
-        if (selectAsset == null) {
+        ObservableList<Asset> selectAssets = table.getSelectionModel().getSelectedItems();
+        if (selectAssets.isEmpty()) {
             Alert selectAlert = new Alert(Alert.AlertType.INFORMATION);
-            selectAlert.setHeaderText("Select an accessory to continue");
+            selectAlert.setHeaderText("Select at least one accessory to continue");
             selectAlert.showAndWait();
             return;
         }
         Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
         deleteAlert.setHeaderText("Are you sure?");
-        deleteAlert.setContentText("Accessories under this asset may also be deleted");
+        deleteAlert.setContentText("Child accessories may also be deleted");
         deleteAlert.showAndWait();
         if (deleteAlert.getResult() == ButtonType.OK) {
             Task<Void> delete = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
-                    DatabaseHandler.deleteAccessory(parentAsset.getTag(), selectAsset.getTag());
+                    for (Asset selectAsset:
+                         selectAssets) {
+                        DatabaseHandler.deleteAccessory(parentAsset.getTag(), selectAsset.getTag());
+                    }
                     return null;
                 }
                 @Override

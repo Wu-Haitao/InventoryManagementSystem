@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,6 +58,7 @@ public class TableManager {
                                  TableColumn<Asset, Integer> colQty,
                                  TableColumn<Asset, String> colLocation,
                                  TableColumn<Asset, String> colAction) {
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         colTag.setCellValueFactory(new PropertyValueFactory<>("tag"));
         colMake.setCellValueFactory(new PropertyValueFactory<>("manufacturerName"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));

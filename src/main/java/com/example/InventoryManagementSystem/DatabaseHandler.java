@@ -166,7 +166,9 @@ public class DatabaseHandler {
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
+            MyLogger.logErr(String.format("Failed to add %s as the accessory of %s - %s", childTag, parentTag, e.getMessage()));
         }
+        MyLogger.logInfo(String.format("Succeeded to add %s as the accessory of %s", childTag, parentTag));
     }
 
     public static void copyAccessoriesRelation(String copiedAssetTag, String newAssetTag) {
@@ -198,7 +200,9 @@ public class DatabaseHandler {
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
+            MyLogger.logErr(String.format("Failed to add asset %s - %s", asset.getTag(), e.getMessage()));
         }
+        MyLogger.logInfo(String.format("Succeeded to add asset %s", asset.getTag()));
     }
 
     public static boolean deleteAccessory(String parentAssetTag, String childAssetTag) {
@@ -206,19 +210,29 @@ public class DatabaseHandler {
             execCommandUpdate(String.format("DELETE FROM ACCESSORIES WHERE PARENTTAG=='%s' AND CHILDTAG=='%s';", parentAssetTag, childAssetTag));
             if (!execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE CHILDTAG=='%s';", childAssetTag)).next()) {
                 //This accessory doesn't belong to any asset
-                execCommandUpdate(String.format("DELETE FROM ASSETS WHERE TAG=='%s';", childAssetTag)); //Delete from asset table
-                ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", childAssetTag));
-                while (rs.next()) {
-                    String childTag = rs.getString("CHILDTAG");
-                    deleteAccessory(childAssetTag, childTag);
-                }
-            }
+                try {
+                    execCommandUpdate(String.format("DELETE FROM ASSETS WHERE TAG=='%s';", childAssetTag)); //Delete from asset table
 
+                    ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", childAssetTag));
+                    while (rs.next()) {
+                        String childTag = rs.getString("CHILDTAG");
+                        deleteAccessory(childAssetTag, childTag);
+                    }
+                }
+                catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                    MyLogger.logErr(String.format("Failed to delete asset %s - %s", childAssetTag, e.getMessage()));
+                    throw e;
+                }
+                MyLogger.logInfo(String.format("Succeeded to delete asset %s", childAssetTag));
+            }
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
+            MyLogger.logErr(String.format("Failed to delete %s as the accessory of %s - %s", childAssetTag, parentAssetTag, e.getMessage()));
             return false;
         }
+        MyLogger.logInfo(String.format("Succeeded to delete %s as the accessory of %s", childAssetTag, parentAssetTag));
         return true;
     }
 
@@ -238,8 +252,10 @@ public class DatabaseHandler {
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
+            MyLogger.logErr(String.format("Failed to update asset %s - %s", asset.getTag(), e.getMessage()));
             return false;
         }
+        MyLogger.logInfo(String.format("Succeeded to update asset %s", asset.getTag()));
         return true;
     }
 }

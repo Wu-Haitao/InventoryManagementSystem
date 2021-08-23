@@ -14,11 +14,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddController {
     public static Asset selectedAsset;
@@ -63,21 +64,27 @@ public class AddController {
             @Override
             protected Void call() throws Exception {
                 boolean applyCopy = (copyCheck.isSelected() && (copiedAsset != null));
-                Asset accessory = new Asset(tagInput.getText(),
-                        new AssetDetails(makeInput.getText(),
-                                modelInput.getText(),
-                                partNoInput.getText(),
-                                rangeUnitInput.getText(),
-                                locationInput.getText(),
-                                remark,
-                                (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
-                                (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
-                                (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText())));
-                if ((selectedAsset.getTag().equals(accessory.getTag())) || DatabaseHandler.checkRelation(selectedAsset.getTag(), accessory.getTag())) {
-                    //The accessory is already a child of current asset
-                    result = false; //Addition canceled
+                AssetDetails details = new AssetDetails(makeInput.getText(),
+                        modelInput.getText(),
+                        partNoInput.getText(),
+                        rangeUnitInput.getText(),
+                        locationInput.getText(),
+                        remark,
+                        (qtyInput.getText().equals(""))? 0:Integer.parseInt(qtyInput.getText()),
+                        (rangeMinInput.getText().equals(""))? 0:Integer.parseInt(rangeMinInput.getText()),
+                        (rangeMaxInput.getText().equals(""))? 0:Integer.parseInt(rangeMaxInput.getText()));
+                String tagInputStrs = tagInput.getText();
+                List<Asset> accessories = Arrays.stream(tagInputStrs.split("\n")).map(tagInputStr -> new Asset(tagInputStr, details)).collect(Collectors.toList());
+                for (Asset accessory:
+                     accessories) {
+                    if ((selectedAsset.getTag().equals(accessory.getTag())) || DatabaseHandler.checkRelation(selectedAsset.getTag(), accessory.getTag())) {
+                        //The accessory is already a child of current asset
+                        result = false; //Addition canceled
+                        return null;
+                    }
                 }
-                else {
+                for (Asset accessory:
+                     accessories) {
                     DatabaseHandler.addAccessory(accessory);
                     DatabaseHandler.addAccessoriesRelation(selectedAsset.getTag(), accessory.getTag());
                     if (applyCopy) DatabaseHandler.copyAccessoriesRelation(copiedAsset.getTag(), accessory.getTag());

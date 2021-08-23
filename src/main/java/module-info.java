@@ -7,6 +7,7 @@ module com.example.InventoryManagementSystem {
     requires java.sql;
     requires de.jensd.fx.glyphs.fontawesome;
     requires org.xerial.sqlitejdbc;
+    requires org.apache.logging.log4j;
 
     opens com.example.InventoryManagementSystem to javafx.fxml;
     opens com.example.InventoryManagementSystem.Controller to javafx.fxml;
