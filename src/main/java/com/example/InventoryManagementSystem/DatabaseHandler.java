@@ -20,6 +20,7 @@ public class DatabaseHandler {
             return false;
         }
     }
+
     public static void connectDatabase(String address) {
         String filePath = address + "/inventory.db";
         File dir = new File(address);
