@@ -168,6 +168,7 @@ public class DatabaseHandler {
         catch (SQLException e) {
             System.err.println(e.getMessage());
             MyLogger.logErr(String.format("Failed to add %s as the accessory of %s - %s", childTag, parentTag, e.getMessage()));
+            return;
         }
         MyLogger.logInfo(String.format("Succeeded to add %s as the accessory of %s", childTag, parentTag));
     }
@@ -202,6 +203,7 @@ public class DatabaseHandler {
         catch (SQLException e) {
             System.err.println(e.getMessage());
             MyLogger.logErr(String.format("Failed to add asset %s - %s", asset.getTag(), e.getMessage()));
+            return;
         }
         MyLogger.logInfo(String.format("Succeeded to add asset %s", asset.getTag()));
     }
@@ -219,13 +221,14 @@ public class DatabaseHandler {
                         String childTag = rs.getString("CHILDTAG");
                         deleteAccessory(childAssetTag, childTag);
                     }
+
+                    MyLogger.logInfo(String.format("Succeeded to delete asset %s", childAssetTag));
                 }
                 catch (SQLException e) {
                     System.err.println(e.getMessage());
                     MyLogger.logErr(String.format("Failed to delete asset %s - %s", childAssetTag, e.getMessage()));
                     throw e;
                 }
-                MyLogger.logInfo(String.format("Succeeded to delete asset %s", childAssetTag));
             }
         }
         catch (SQLException e) {
