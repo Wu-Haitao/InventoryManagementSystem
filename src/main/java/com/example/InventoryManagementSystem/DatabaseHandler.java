@@ -68,6 +68,10 @@ public class DatabaseHandler {
                     " CONSTRAINT ACCESSORIES_PK PRIMARY KEY (PARENTTAG, CHILDTAG)," +
                     " CONSTRAINT ACCESSORIES_FK FOREIGN KEY (PARENTTAG, CHILDTAG) REFERENCES ASSETS(TAG, TAG));";
             statement.executeUpdate(sql);
+            sql = "CREATE TABLE USER" +
+                    "(USERNAME    TEXT PRIMARY KEY," +
+                    " PASSWORD    TEXT);";
+            statement.executeUpdate(sql);
             statement.close();
         }
         catch (SQLException e) {
@@ -100,6 +104,26 @@ public class DatabaseHandler {
         return getAssetWithTag("root");
     }
 
+    public static void registerUser(String username, String password) {
+        try {
+            execCommandUpdate(String.format("INSERT INTO USER VALUES('%s', '%s');", username, password));
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static boolean checkUser(String username, String password) {
+        try {
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM USER WHERE USERNAME=='%s' AND PASSWORD=='%s'", username, password));
+            return (!rs.isClosed());
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
     public static Boolean findInDatabase(String tag) {
         try {
             ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", tag));
@@ -128,6 +152,7 @@ public class DatabaseHandler {
         Asset asset = null;
         try {
             ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", tag));
+            rs.next();
             asset = getAssetFromResultSet(rs);
         }
         catch (SQLException e) {

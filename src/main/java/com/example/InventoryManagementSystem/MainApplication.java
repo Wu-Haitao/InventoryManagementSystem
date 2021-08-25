@@ -18,16 +18,9 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        Task<Void> connectDatabase = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                DatabaseHandler.checkDrivers();
-                DatabaseHandler.connectDatabase(System.getProperty("user.dir").replace("\\", "/") + "/AppData");
-                if (DatabaseHandler.init) DatabaseHandler.initDatabase();
-                return null;
-            }
-        };
-        new Thread(connectDatabase).start();
+        DatabaseHandler.checkDrivers();
+        DatabaseHandler.connectDatabase(System.getProperty("user.dir").replace("\\", "/") + "/AppData");
+        if (DatabaseHandler.init) DatabaseHandler.initDatabase();
         launch();
         DatabaseHandler.closeDatabase();
     }
