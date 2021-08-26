@@ -1,6 +1,7 @@
 package com.example.InventoryManagementSystem;
 
 import com.example.InventoryManagementSystem.Controller.AssetDescriptionController;
+import com.example.InventoryManagementSystem.Controller.EditController;
 import com.example.InventoryManagementSystem.Controller.MainController;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -93,6 +94,27 @@ public class TableManager {
                         }
                     });
 
+                    JFXButton button1_5 = new JFXButton();
+                    button1_5.setFocusTraversable(false);
+                    iconView = new FontAwesomeIconView(FontAwesomeIcon.PAINT_BRUSH);
+                    iconView.setFill(Color.WHITE);
+                    button1_5.setGraphic(iconView);
+                    button1_5.getStyleClass().addAll("btn-xs", "btn-info");
+                    button1_5.setOnAction(actionEvent -> {
+                        EditController.selectedAsset = this.getTableRow().getItem();
+                        try {
+                            Stage stage = StageManager.switchToStage(StageInfo.EDIT_STAGE);
+
+                            stage.setOnHiding((event) -> {
+                                refreshTable(table);
+                            });
+                            stage.show();
+                        }
+                        catch (IOException e) {
+                            System.err.println("No way");
+                        }
+                    });
+
                     JFXButton button2 = new JFXButton();
                     button2.setFocusTraversable(false);
                     iconView = new FontAwesomeIconView(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT);
@@ -104,7 +126,7 @@ public class TableManager {
                         MainController.getController().reloadWindow(this.getTableRow().getItem());
                     });
 
-                    hbox.getChildren().addAll(button1, button2);
+                    hbox.getChildren().addAll(button1, button1_5, button2);
 
                     if (empty) {
                         setText(null);
