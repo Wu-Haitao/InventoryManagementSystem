@@ -2,6 +2,7 @@ package com.example.InventoryManagementSystem.Controller;
 
 import com.example.InventoryManagementSystem.*;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -40,6 +41,9 @@ public class MainController {
     private JFXTextField tag_input, qty_input;
 
     @FXML
+    private Button btn_add, btn_delete, btn_edit;
+
+    @FXML
     private Label tagLabel, makeLabel, modelLabel, partNoLabel, rangeLabel, qtyLabel, locationLabel;
 
     @FXML
@@ -56,6 +60,9 @@ public class MainController {
 
     @FXML
     Label item_count;
+
+    @FXML
+    JFXToggleButton modeToggle;
 
     private static MainController controller;
 
@@ -197,9 +204,15 @@ public class MainController {
         new Thread(goBack).start();
     }
 
+    @FXML
+    protected void changeShowMode() {
+        TableManager.setShowAllMode(modeToggle.isSelected());
+        TableManager.refreshTable(table);
+    }
+
     public void reloadWindow(Asset newParentAsset) {
         parentAsset = newParentAsset;
-        initDescriptionPanel();
+        setDescriptionPanel(parentAsset);
         tag_input.setText("");
         qty_input.setText("");
         handleFilterChange();
@@ -224,7 +237,12 @@ public class MainController {
                 protected Void call() throws Exception {
                     for (Asset selectAsset:
                          selectAssets) {
-                        DatabaseHandler.deleteAccessory(parentAsset.getTag(), selectAsset.getTag());
+                        if (modeToggle.isSelected()) {
+                            DatabaseHandler.deleteAsset(selectAsset.getTag());
+                        }
+                        else {
+                            DatabaseHandler.deleteAccessory(parentAsset.getTag(), selectAsset.getTag());
+                        }
                     }
                     return null;
                 }
@@ -278,6 +296,7 @@ public class MainController {
         webEngine.setUserStyleSheetLocation(MainApplication.class.getResource("webview-noscroll.css").toExternalForm());
         webEngine.loadContent(asset.getRemark());
         maskPane.setVisible(parentAsset.getTag().equals("root"));
+        btn_edit.setDisable(parentAsset.getTag().equals("root"));
     }
 
     /* Initialization */

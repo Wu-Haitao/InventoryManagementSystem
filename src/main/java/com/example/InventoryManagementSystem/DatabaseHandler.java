@@ -124,7 +124,7 @@ public class DatabaseHandler {
         }
     }
 
-    public static Boolean findInDatabase(String tag) {
+    public static boolean findInDatabase(String tag) {
         try {
             ResultSet rs = execCommandQuery(String.format("SELECT * FROM ASSETS WHERE TAG=='%s';", tag));
             return (rs.next());
@@ -167,6 +167,20 @@ public class DatabaseHandler {
             ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", parentAsset.getTag()));
             while (rs.next()) {
                 assets.add(getAssetWithTag(rs.getString("CHILDTAG")));
+            }
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return assets;
+    }
+
+    public static List<Asset> getAllAssets() {
+        List<Asset> assets = new ArrayList<>();
+        try {
+            ResultSet rs = execCommandQuery("SELECT * FROM ASSETS WHERE TAG!='root';");
+            while (rs.next()) {
+                assets.add(getAssetFromResultSet(rs));
             }
         }
         catch (SQLException e) {
@@ -263,6 +277,27 @@ public class DatabaseHandler {
         }
         MyLogger.logInfo(String.format("Succeeded to delete %s as the accessory of %s", childAssetTag, parentAssetTag));
         return true;
+    }
+
+    public static boolean deleteAsset(String assetTag) {
+        try {
+            execCommandUpdate(String.format("DELETE FROM ACCESSORIES WHERE CHILDTAG=='%s';", assetTag)); //Delete from accessories list table
+
+            execCommandUpdate(String.format("DELETE FROM ASSETS WHERE TAG=='%s';", assetTag)); //Delete from asset table
+
+            ResultSet rs = execCommandQuery(String.format("SELECT * FROM ACCESSORIES WHERE PARENTTAG=='%s';", assetTag));
+            while (rs.next()) {
+                String childTag = rs.getString("CHILDTAG");
+                deleteAccessory(assetTag, childTag);
+            }
+            MyLogger.logInfo(String.format("Succeeded to delete asset %s completely", assetTag));
+            return true;
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+            MyLogger.logErr(String.format("Failed to delete asset %s completely - %s", assetTag, e.getMessage()));
+            return false;
+        }
     }
 
     public static boolean updateAsset(Asset asset) {

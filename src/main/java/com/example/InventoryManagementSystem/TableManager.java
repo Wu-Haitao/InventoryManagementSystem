@@ -24,10 +24,15 @@ import java.util.List;
 
 public class TableManager {
     private static ObservableList<Asset> tableItems;
+    private static boolean showAllMode = false;
+
+    public static void setShowAllMode(boolean flag) {
+        showAllMode = flag;
+    }
 
     private static void retrieveTableItemsData() {
         ObservableList<Asset> items = FXCollections.observableArrayList();
-        List<Asset> assets = DatabaseHandler.getChildAssets(TableFilter.getParentAsset());
+        List<Asset> assets = (showAllMode)? DatabaseHandler.getAllAssets():DatabaseHandler.getChildAssets(TableFilter.getParentAsset());
         items.addAll(assets);
         tableItems = TableFilter.getFilteredResult(items);
     }

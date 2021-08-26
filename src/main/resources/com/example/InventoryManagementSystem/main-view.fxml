@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
@@ -63,7 +64,7 @@
                            <children>
                               <JFXRadioButton focusTraversable="false" onAction="#radioBtnSelect" prefWidth="55.0" selected="true" text="More">
                                  <selectedColor>
-                                    <Color red="0.061000000685453415" green="0.4541398286819458" blue="0.6100000143051147" />
+                                    <Color red="0.250980406999588" green="0.3490196168422699" blue="0.6627451181411743" />
                                  </selectedColor>
                                  <toggleGroup>
                                     <ToggleGroup fx:id="A" />
@@ -71,22 +72,31 @@
                                  <font>
                                     <Font size="10.0" />
                                  </font>
+                                 <unSelectedColor>
+                                    <Color red="0.3019607961177826" green="0.3019607961177826" blue="0.3019607961177826" />
+                                 </unSelectedColor>
                               </JFXRadioButton>
                               <JFXRadioButton focusTraversable="false" onAction="#radioBtnSelect" prefWidth="55.0" text="Equal" toggleGroup="$A">
                                  <selectedColor>
-                                    <Color red="0.061000000685453415" green="0.4541398286819458" blue="0.6100000143051147" />
+                                    <Color red="0.250980406999588" green="0.3490196168422699" blue="0.6627451181411743" />
                                  </selectedColor>
                                  <font>
                                     <Font size="10.0" />
                                  </font>
+                                 <unSelectedColor>
+                                    <Color red="0.3019607961177826" green="0.3019607961177826" blue="0.3019607961177826" />
+                                 </unSelectedColor>
                               </JFXRadioButton>
                               <JFXRadioButton focusTraversable="false" onAction="#radioBtnSelect" prefWidth="55.0" text="Less" toggleGroup="$A">
                                  <selectedColor>
-                                    <Color red="0.061000000685453415" green="0.4541398286819458" blue="0.6100000143051147" />
+                                    <Color red="0.250980406999588" green="0.3490196168422699" blue="0.6627451181411743" />
                                  </selectedColor>
                                  <font>
                                     <Font size="10.0" />
                                  </font>
+                                 <unSelectedColor>
+                                    <Color red="0.3019607961177826" green="0.3019607961177826" blue="0.3019607961177826" />
+                                 </unSelectedColor>
                               </JFXRadioButton>
                            </children>
                         </HBox>
@@ -149,7 +159,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#switchToEditStage" prefHeight="70.0" prefWidth="115.0" text="Edit" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0">
+                  <Button fx:id="btn_edit" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#switchToEditStage" prefHeight="70.0" prefWidth="115.0" text="Edit" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -278,6 +288,7 @@
                   <Insets right="10.0" />
                </padding>
             </Label>
+            <JFXToggleButton fx:id="modeToggle" layoutX="-45.0" layoutY="519.6" onAction="#changeShowMode" prefHeight="58.0" prefWidth="178.0" size="8.0" text="Show all" toggleColor="#4059a9" toggleLineColor="#405aa880" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-45.0" />
          </children>
       </AnchorPane>
       <Button focusTraversable="false" layoutX="873.0" layoutY="6.0" mnemonicParsing="false" onAction="#exitApplication" onMouseEntered="#buttonHoverEnter" onMouseExited="#buttonHoverExit" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">

@@ -15,6 +15,9 @@ public class History {
         }
         else {
             history.pop();
+            while (!DatabaseHandler.findInDatabase(history.peek())) {
+                history.pop();
+            }
             return history.peek();
         }
     }
