@@ -4,7 +4,7 @@
 
 This is an application aimed at facilitating the management of spare parts.
 
-The application is developed with JavaFX and SQLite.
+The application is developed with **JavaFX** and **SQLite**.
 
 ## Features
 
@@ -57,3 +57,11 @@ Note that the asset tag can not be changed. Instead, delete this asset and add a
 The copy accessories list function can be implemented as well.
 
 ### Delete
+
+Select the assets in the table to be deleted. Then click on the delete button.
+
+The delete function removes the selected assets from the accessories list of the current selected asset. Accessories under the selected assets may be deleted as well depends on whether they have any 'parent' assets.
+
+Some of the deleted assets may still be in the database. An asset will be fully removed only when it doesn't belong to any asset as an accessory.
+
+The case is different when 'view all' mode is toggled. In this mode, deleting an asset will completely remove it from database.
