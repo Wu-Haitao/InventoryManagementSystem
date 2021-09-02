@@ -70,6 +70,10 @@ Some of the deleted assets may still be in the database. An asset will be fully 
 
 The case is different when 'view all' mode is toggled. In this mode, deleting an asset will completely remove it from database.
 
+### Log
+
+Operations will be recorded into the log file located at ~/AppData/Log folder. Do check the log file when encounter any issue.
+
 ## Appendix
 
 ### ER Diagram
