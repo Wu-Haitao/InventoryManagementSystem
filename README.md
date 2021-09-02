@@ -14,7 +14,7 @@ The application is developed with **JavaFX** and **SQLite**.
 
 The panel left contains all the information about the current selected asset including its tag, quantity, etc.
 
-Restricted by the panel size, some information may be wrapped. In order to view the full details, click on the button showed and it will open an asset details window.
+Restricted by the panel size, some information may be wrapped. In order to view the full details, click on the button on top right and it will open an asset details window.
 
 #### Accessories List
 
@@ -32,9 +32,9 @@ The filter now supports tag and quantity attribute.
 
 ### Navigation
 
-By clicking the right-arrow button in the table row, the accessoy will be selected.
+By clicking the right-arrow button in the table row, the corresponding accessory will be selected.
 
-To go back, click on the left-arrow button.
+To go back, click on the left-arrow button above the asset details panel.
 
 ### Add
 
@@ -52,16 +52,26 @@ To use this function, first click on the copy button in the asset details panel.
 
 Click on the edit button to open the edit window. After modifying the asset information and clicking save button, the asset will be updated. All modifications are based on the current selected asset.
 
-Note that the asset tag can not be changed. Instead, delete this asset and add a new one.
+Note that the asset tag cannot be changed. Instead, delete this asset and add a new one.
 
 The copy accessories list function can be implemented as well.
 
+#### Edit an Accessory
+
+Click on the brush button of an accessory in the list to start editing it. Sometimes this is more convenient compared to the default edit operation.
+
 ### Delete
 
-Select the assets in the table to be deleted. Then click on the delete button.
+Select the assets in the table (hold ctrl or shift to select multiple). Then click on the delete button.
 
 The delete function removes the selected assets from the accessories list of the current selected asset. Accessories under the selected assets may be deleted as well depends on whether they have any 'parent' assets.
 
 Some of the deleted assets may still be in the database. An asset will be fully removed only when it doesn't belong to any asset as an accessory.
 
 The case is different when 'view all' mode is toggled. In this mode, deleting an asset will completely remove it from database.
+
+## Appendix
+
+### ER Diagram
+
+![ER Diagram](https://user-images.githubusercontent.com/59434361/131804584-7b10b0b1-473e-4b04-adef-39e592e7bf0d.png)
