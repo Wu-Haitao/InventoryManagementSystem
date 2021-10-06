@@ -299,6 +299,12 @@ public class MainController {
         btn_edit.setDisable(parentAsset.getTag().equals("root"));
     }
 
+    /* More functions */
+    @FXML
+    protected void openLogDir() {
+        MyLogger.openLogDir();
+    }
+
     /* Initialization */
     private void initDescriptionPanel() {
         setDescriptionPanel(parentAsset);
