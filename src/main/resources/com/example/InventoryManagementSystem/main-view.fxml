@@ -294,7 +294,7 @@
             <MenuButton alignment="CENTER" focusTraversable="false" mnemonicParsing="false" popupSide="TOP" prefHeight="20.0" prefWidth="85.0" text="More" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#openLogDir" text="Log" />
-                <MenuItem mnemonicParsing="false" text="Backup" />
+                <MenuItem mnemonicParsing="false" onAction="#backupDatabase" text="Backup" />
                   <MenuItem mnemonicParsing="false" text="Export" />
               </items>
                <styleClass>

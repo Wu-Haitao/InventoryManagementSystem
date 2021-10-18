@@ -1,7 +1,11 @@
 package com.example.InventoryManagementSystem;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,20 @@ public class DatabaseHandler {
         } catch (ClassNotFoundException | SQLException exception) {
             System.err.println(exception.getMessage());
             return false;
+        }
+    }
+
+    private static Path getDatabasePath() {
+        return Path.of(System.getProperty("user.dir"), "AppData", "inventory.db");
+    }
+
+    public static void backupDatabase(File dest) {
+        try {
+            Files.copy(getDatabasePath(), dest.toPath().resolve(Path.of("inventory.db")), StandardCopyOption.REPLACE_EXISTING);
+            Desktop.getDesktop().open(dest);
+        }
+        catch (Exception e) {
+            MyLogger.logErr(String.format("Failed to backup database - %s", e.getMessage()));
         }
     }
 

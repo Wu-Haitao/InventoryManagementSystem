@@ -17,10 +17,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 public class MainController {
     private Asset parentAsset;
@@ -303,6 +303,12 @@ public class MainController {
     @FXML
     protected void openLogDir() {
         MyLogger.openLogDir();
+    }
+
+    @FXML
+    protected void backupDatabase() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        DatabaseHandler.backupDatabase(directoryChooser.showDialog(((Node) root).getScene().getWindow()));
     }
 
     /* Initialization */
