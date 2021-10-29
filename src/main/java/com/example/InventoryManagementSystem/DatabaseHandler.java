@@ -2,6 +2,7 @@ package com.example.InventoryManagementSystem;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +10,8 @@ import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 public class DatabaseHandler {
     private static Connection connection = null;
@@ -36,6 +39,32 @@ public class DatabaseHandler {
         }
         catch (Exception e) {
             MyLogger.logErr(String.format("Failed to backup database - %s", e.getMessage()));
+        }
+    }
+
+    public static void exportToJson(File dest) {
+        try {
+            List<Asset> items = getAllAssets();
+            JSONArray itemList = new JSONArray();
+            for (Asset item:
+                 items) {
+                JSONObject currentItem = new JSONObject();
+                currentItem.put("tag", item.getTag());
+                currentItem.put("make", item.getManufacturerName());
+                currentItem.put("model", item.getModel());
+                currentItem.put("partNo", item.getPartNo());
+                currentItem.put("range", item.getRange());
+                currentItem.put("qty", item.getQty());
+                currentItem.put("location", item.getLocation());
+                itemList.add(currentItem);
+            }
+            FileWriter file = new FileWriter(new File(dest, "inventory.json"));
+            file.write(itemList.toJSONString());
+            file.flush();
+            Desktop.getDesktop().open(dest);
+        }
+        catch (Exception e) {
+            MyLogger.logErr(String.format("Failed to export database - %s", e.getMessage()));
         }
     }
 

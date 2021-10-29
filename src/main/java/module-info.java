@@ -9,6 +9,7 @@ module com.example.InventoryManagementSystem {
     requires org.xerial.sqlitejdbc;
     requires org.apache.logging.log4j;
     requires java.desktop;
+    requires json.simple;
 
     opens com.example.InventoryManagementSystem to javafx.fxml;
     opens com.example.InventoryManagementSystem.Controller to javafx.fxml;

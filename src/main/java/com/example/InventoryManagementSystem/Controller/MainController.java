@@ -311,6 +311,12 @@ public class MainController {
         DatabaseHandler.backupDatabase(directoryChooser.showDialog(((Node) root).getScene().getWindow()));
     }
 
+    @FXML
+    protected void exportToJson() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        DatabaseHandler.exportToJson(directoryChooser.showDialog(((Node) root).getScene().getWindow()));
+    }
+
     /* Initialization */
     private void initDescriptionPanel() {
         setDescriptionPanel(parentAsset);
