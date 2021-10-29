@@ -10,14 +10,12 @@ import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 
 public class DatabaseHandler {
     private static Connection connection = null;
     public static boolean init = false;
 
-    public static boolean checkDrivers() {
+    /*public static boolean checkDrivers() {
         try {
             Class.forName("org.sqlite.JDBC");
             DriverManager.registerDriver(new org.sqlite.JDBC());
@@ -26,7 +24,7 @@ public class DatabaseHandler {
             System.err.println(exception.getMessage());
             return false;
         }
-    }
+    }*/
 
     private static Path getDatabasePath() {
         return Path.of(System.getProperty("user.dir"), "AppData", "inventory.db");
@@ -45,22 +43,27 @@ public class DatabaseHandler {
     public static void exportToJson(File dest) {
         try {
             List<Asset> items = getAllAssets();
-            JSONArray itemList = new JSONArray();
+            List<String> itemList = new ArrayList<>();
             for (Asset item:
                  items) {
-                JSONObject currentItem = new JSONObject();
-                currentItem.put("tag", item.getTag());
-                currentItem.put("make", item.getManufacturerName());
-                currentItem.put("model", item.getModel());
-                currentItem.put("partNo", item.getPartNo());
-                currentItem.put("range", item.getRange());
-                currentItem.put("qty", item.getQty());
-                currentItem.put("location", item.getLocation());
+                String currentItem = "{"
+                        .concat(String.format("\"tag\": \"%s\", ", item.getTag()))
+                        .concat(String.format("\"make\": \"%s\", ", item.getManufacturerName()))
+                        .concat(String.format("\"model\": \"%s\", ", item.getModel()))
+                        .concat(String.format("\"partNo\": \"%s\", ", item.getPartNo()))
+                        .concat(String.format("\"range\": \"%s\", ", item.getRange()))
+                        .concat(String.format("\"qty\": %d, ", item.getQty()))
+                        .concat(String.format("\"location\": \"%s\"", item.getLocation()))
+                        .concat("}");
                 itemList.add(currentItem);
             }
+            String result = "["
+                    .concat(String.join(", ", itemList))
+                    .concat("]");
             FileWriter file = new FileWriter(new File(dest, "inventory.json"));
-            file.write(itemList.toJSONString());
+            file.write(result);
             file.flush();
+            file.close();
             Desktop.getDesktop().open(dest);
         }
         catch (Exception e) {

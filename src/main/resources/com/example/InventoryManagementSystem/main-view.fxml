@@ -295,7 +295,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#openLogDir" text="Log" />
                 <MenuItem mnemonicParsing="false" onAction="#backupDatabase" text="Backup" />
-                  <MenuItem mnemonicParsing="false" onAction="#exportToJson" text="Export" />
+                <MenuItem mnemonicParsing="false" onAction="#exportToJson" text="Export" />
               </items>
                <styleClass>
                   <String fx:value="split-menu-btn" />

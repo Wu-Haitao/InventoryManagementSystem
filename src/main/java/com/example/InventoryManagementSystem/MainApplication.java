@@ -1,7 +1,6 @@
 package com.example.InventoryManagementSystem;
 
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -18,7 +17,7 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        DatabaseHandler.checkDrivers();
+        //DatabaseHandler.checkDrivers();
         DatabaseHandler.connectDatabase(System.getProperty("user.dir").replace("\\", "/") + "/AppData");
         if (DatabaseHandler.init) DatabaseHandler.initDatabase();
         launch();
